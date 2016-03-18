@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -178,8 +180,22 @@ public class SpotOnView extends View {
     //create the app's SoundPool for playing game audio
     private void initializeSoundEffects(Context context) {
         //initialize SoundPool to play the app's three sound effects
-        soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC,
-                SOUND_QUALITY);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .build();
+
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(2)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+
+        } else {
+            soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC,
+                    SOUND_QUALITY);
+        }
+
 
         //set sound effect volume
         AudioManager manager =
