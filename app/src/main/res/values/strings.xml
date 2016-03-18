@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Spot On</string>
+    <string name="high_score">Markah tertinggi</string>
+    <string name="score">Markah</string>
+    <string name="level">Level</string>
+    <string name="game_over">Abis</string>
+    <string name="reset_game">Main lagi</string>
+</resources>
